@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="MergeJar" default="apache-commons">
+
+    <!-- 当前版本 -->
+    <property name="version" value="v1.0.0"/>
+
+    <!-- 合成jar包后存放路径 -->
+    <property name="basePath" value="${basedir}/MergeJarRelease"/>
+
+    <!-- 新jar包名字 -->
+    <property name="newJarName" value="open_sdk_${version}.jar"/>
+
+    <!-- 待合并的jar包存放路径 -->
+    <property name="jarPath" value="testJar"/>
+
+    <target name="apache-commons">
+        <delete file="${basePath}/${newJarName}"/>
+        <jar destfile="${basePath}/${newJarName}" duplicate="preserve">
+            <zipgroupfileset dir="${jarPath}" includes="*.jar"/>
+        </jar>
+    </target>
+
+</project>

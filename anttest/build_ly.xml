@@ -1,0 +1,198 @@
+<project name="nsdkplugin" default="all" basedir="./">
+	<property file="../local.properties" />
+
+	<!-- 基础路径 -->
+	<property name="base.dir" location="./" />
+
+	<!-- SDK文件来源 -->
+	<property name="src.dir" location="${base.dir}/src" />
+
+	<!-- 输出zip包路径 -->
+	<property name="release.dir" location="${base.dir}/release" />
+
+	<!-- 引入Android依赖 -->
+	<property name="android.lib" value="${base.dir}/libs/android.jar" />
+	
+	<!-- 引入混淆依赖 -->
+	<property name="lib.proguard" value="${sdk.dir}\tools\proguard\lib\proguard.jar" />
+	
+	<!-- 编译成class文件存放的路径 -->
+	<property name="java.dir" value="${release.dir}/java" />
+	<property name="class.dir" value="${release.dir}/classes" />
+
+
+	<!-- 渠道信息 -->
+	<property name="channel.name" value="" />
+	<property name="sdk.version.suffix" value="" />
+	
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="${base.dir}/libs/ant/ant-contrib-1.0b3.jar"></taskdef>
+
+	<target name="all">
+		<delete verbose="true" includeEmptyDirs="true">
+			<fileset dir="${release.dir}">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+		<!--<foreach delimiter="," list="${nsdk.plugin.channels}" param="channel" target="zip_all_channels"></foreach>-->
+	</target>
+	
+
+	<!-- 声明依赖的jar -->
+	<path id="dependencies">
+		<fileset dir="${basedir}">
+			<include name="resourse/${channel.name}/${sdk.version.suffix}/libs/*.jar" />
+		</fileset>
+		<fileset dir="${sdk.dir}/tools/support">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${base.dir}/libs/">
+		</fileset>
+	</path>
+
+	<!-- 清空release下所有的文件并新建所需要的目录 -->
+	<target name="init">
+		<delete includeEmptyDirs="true" verbose="true">
+			<fileset dir="${release.dir}">
+				<exclude name="*.zip" />
+			</fileset>
+		</delete>
+
+	</target>
+
+	<!-- 拷贝资源文件 -->
+	<target name="copy_file" depends="init">
+		<!-- 拷贝资源文件 -->
+		<copy todir="${release.dir}">
+			<fileset dir="${base.dir}/resourse/${channel.name}/${sdk.version.suffix}" />
+		</copy>
+
+		<!-- 拷贝xml配置文件
+		<copy todir="${release.nsdk.config.dir}">
+			<fileset dir="${base.dir}/conf/${channel.name}/${sdk.version.suffix}">
+				<exclude name="manifest.xml"></exclude>
+			</fileset>
+		</copy>
+ -->
+		<copy todir="${release.dir}">
+			<fileset dir="${base.dir}/conf/${channel.name}/${sdk.version.suffix}">
+				<include name="manifest.xml" />
+			</fileset>
+		</copy>
+	</target>
+
+	<!-- 拆分java文件（通过拷贝命令） -->
+	<target name="copy_java" depends="copy_file">
+		<!-- java.dir自定义java文件存放的文件路径 -->
+		<mkdir dir="${java.dir}" />
+		<copy todir="${java.dir}">
+			<fileset dir="${src.dir}">
+				<include name="com/**/${channel.name}/${sdk.version.suffix}/*.java" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="compile_java" depends="copy_java">
+		<!-- class.dir自定义class文件存放的文件路径 -->
+		<delete dir="${class.dir}" />
+		<mkdir dir="${class.dir}" />
+
+		<javac bootclasspath="${android.lib}" debug="true" destdir="${class.dir}"
+			encoding="UTF-8" extdirs="" includeAntRuntime="false" srcdir="${java.dir}"
+			target="1.6" debuglevel="source,lines,vars">
+			<classpath refid="dependencies" />
+		</javac>
+		
+		<jar jarfile="${release.dir}/libs/nsdkplugin_${channel.name}_${sdk.version.suffix}.jar" basedir="${class.dir}">
+		    <zipfileset src="${base.dir}/libs/ly/nsdk.jar" />
+		</jar>
+
+		<delete includeEmptyDirs="true">
+			<fileset dir="${java.dir}"></fileset>
+			<fileset dir="${class.dir}"></fileset>
+		</delete>
+	</target>
+
+	<target name="optimize_class" depends="compile_java">
+	    <java failonerror="true" fork="true" jar="${lib.proguard}" >
+            <jvmarg value="-Dmaximum.inlined.code.length=32" />
+            <arg value="-injars ${release.dir}/libs/nsdkplugin_${channel.name}_${sdk.version.suffix}.jar" />
+            <arg value="-outjars ${release.dir}/libs/nsdk_${channel.name}_${sdk.version.suffix}.jar" />
+            <arg value="-libraryjars ${android.lib}" />
+            <!--添加编译引用（防止混淆出错）-->
+            <arg value="-dontpreverify" />
+            <arg value="-dontoptimize" />
+            <arg value="-dontusemixedcaseclassnames" />
+            <arg value="-allowaccessmodification" />
+            <arg value="-optimizationpasses 7" />
+            <arg value="-verbose" />
+            <arg value="-dontskipnonpubliclibraryclasses" />
+            <arg value="-dontskipnonpubliclibraryclassmembers" />
+            
+            <arg value="-renamesourcefileattribute SourceFile"/>
+            <arg value="-keepattributes SourceFile,LineNumberTable" />
+            
+            <!-- 取消警告 -->
+            <arg value="-dontwarn android.annotation.**" />
+            <arg value="-keep public class android.annotation.**{*;}" />
+            <arg value="-dontwarn com.**" />
+
+            <!-- 在这里添加不要混淆配置 -->
+            <arg value="-keepattributes Signature" />
+            <arg value="-keepattributes Exceptions*" />
+            <arg value="-keepclassmembers enum * {public static **[] values();public static ** valueOf(java.lang.String);}" />
+            <arg value="-keep class com.hanfeng.nsdk.NSdk{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.nsdk.NSdkExt{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.nsdk.NSdkListener{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.nsdk.NSdkSplashActivity{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.nsdk.NSdkApplication{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.nsdk.NSdkStatusCode{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.nsdk.SDKState{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.nsdk.bean.*{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.nsdk.exception.*{public &lt;fields>;&lt;methods>;}" />
+            
+            <!-- TD混淆 -->
+            <arg value=" -keep class com.talkingdata.sdk.** {*;}" />
+            <arg value=" -keep class com.tendcloud.** {*;} " />
+            <arg value=" -keep public class com.tendcloud.** {  public protected *;}" />
+            <arg value="-keep class com.hanfeng.guildsdk.HfsdkApplication{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.guildsdk.tool.AssetTool{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.guildsdk.services.DeviceInfo{public &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class com.hanfeng.guildsdk.services.Constants{public &lt;fields>;&lt;methods>;}" />
+            
+            
+            <arg value="-keep class * implements com.hanfeng.nsdk.components.IActivityListener {public &lt;fields>;&lt;methods>; protected &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class * implements com.hanfeng.nsdk.components.IApplicationProxy {public &lt;fields>;&lt;methods>; protected &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class * extends com.hanfeng.nsdk.components.BaseNSdkComponent {public &lt;fields>;&lt;methods>; protected &lt;fields>;&lt;methods>;}" />
+            <arg value="-keep class * extends com.hanfeng.nsdk.components.NSExtComponent {public &lt;fields>;&lt;methods>; protected &lt;fields>;&lt;methods>;}" />
+        	<arg value="-keep class com.yinhan.nsdk.${channel.name}.${sdk.version.suffix}.* {public &lt;fields>;&lt;methods>; protected &lt;fields>;&lt;methods>;}" />
+        </java>
+        
+        <delete includeEmptyDirs="true">
+	    	<fileset dir="${release.dir}/libs/"><include name="nsdkplugin_${channel.name}_${sdk.version.suffix}.jar"></include></fileset>
+		</delete>
+	</target>
+	
+	<!-- zip web info -->
+	<target name="zip_plugin" depends="optimize_class">
+		<zip
+			destfile="${release.dir}/nsdkplugin_${channel.name}_${sdk.version.suffix}.zip"
+			basedir="${release.dir}">
+			<exclude name="*.zip" />
+		</zip>
+		<!-- delete other zips -->
+		<delete includeEmptyDirs="true">
+			<fileset dir="${release.dir}">
+				<exclude name="*.zip" />
+			</fileset>
+		</delete>
+		<echo>Building nsdkplugin_${channel.name}_${sdk.version.suffix}.zip finished</echo>
+	</target>
+
+	<target name="zip_all_channels">
+		<propertyregex input="${channel}" override="true" property="channel.name" regexp="(.*):" select="\1" />
+		<propertyregex input="${channel}" override="true" property="sdk.version.suffix" regexp=":(.*)" select="\1" />
+		<echo>Building nsdkplugin_${channel.name}_${sdk.version.suffix}.zip start</echo>
+		<antcall target="zip_plugin" />
+	</target>
+
+</project>

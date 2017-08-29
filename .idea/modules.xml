@@ -3,8 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OpenSDK.iml" filepath="$PROJECT_DIR$/OpenSDK.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sdklibrary/sdklibrary.iml" filepath="$PROJECT_DIR$/sdklibrary/sdklibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SDKExample/SDKExample.iml" filepath="$PROJECT_DIR$/SDKExample/SDKExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/anttest/anttest.iml" filepath="$PROJECT_DIR$/anttest/anttest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sdkjar/sdkjar.iml" filepath="$PROJECT_DIR$/sdkjar/sdkjar.iml" />
     </modules>
   </component>
 </project>
