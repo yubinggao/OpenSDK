@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.open.sdk.config.DetailedList;
+import com.open.sdk.view.LoginLayout;
 
 
 /**
@@ -31,13 +32,7 @@ public class SdkActivity extends Activity {
     }
 
     private View loginLayout() {
-        RelativeLayout layout = new RelativeLayout(this);
-        RelativeLayout.LayoutParams rl = new RelativeLayout.LayoutParams(DetailedList.w, DetailedList.h);
-        rl.addRule(RelativeLayout.CENTER_VERTICAL);
-        rl.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        layout.setPadding(DetailedList.d10, 0, DetailedList.d10, DetailedList.d12);
-        layout.setBackgroundColor(0xffff0000);
-        layout.setLayoutParams(rl);
+        LoginLayout layout = new LoginLayout(this);
         return layout;
     }
 }
