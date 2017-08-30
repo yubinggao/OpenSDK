@@ -20,22 +20,22 @@ import com.open.sdk.utlis.Shape;
  * Created by Administrator on 2017/8/29.
  */
 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-public class LoginLayout extends RelativeLayout {
+public class SetPasswordLayout extends RelativeLayout {
     //ViewGroup.LayoutParams.MATCH_PARENT = -1
     private Context mContext;
     private SdkListener listener;
 
-    public LoginLayout(Context context) {
+    public SetPasswordLayout(Context context) {
         super(context);
         init(context);
     }
 
-    public LoginLayout(Context context, AttributeSet attrs) {
+    public SetPasswordLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
-    public LoginLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SetPasswordLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -49,8 +49,8 @@ public class LoginLayout extends RelativeLayout {
      */
     private void initWidthHeight() {
         LayoutParams rl = new LayoutParams(DetailedList.w, DetailedList.h);
-        rl.addRule(RelativeLayout.CENTER_VERTICAL);
         rl.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        rl.addRule(RelativeLayout.CENTER_VERTICAL);
         setLayoutParams(rl);
         setPadding(DetailedList.d10, 0, DetailedList.d10, DetailedList.d12);
         setBackground(Shape.getShapeWhite(mContext));
@@ -67,17 +67,15 @@ public class LoginLayout extends RelativeLayout {
         initTitle();
         initPhonePassworld();
         initLogin();
-        setPassword();
-        registeredAccount();
     }
 
     /**
-     * 登录标题
+     * 找回密码标题
      */
     private void initTitle() {
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d68);
         TextView title = new TextView(mContext);
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d86);
-        title.setText(DetailedList.sdkLoginTitle);
+        title.setText(DetailedList.setPwdTitle);
         title.setTextColor(0xff464646);
         title.setTextSize(20);
         title.setGravity(Gravity.CENTER);
@@ -90,19 +88,26 @@ public class LoginLayout extends RelativeLayout {
      * 输入帐号与密码
      */
     private void initPhonePassworld() {
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d79);
+        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d118);
         RelativeLayout layout = new RelativeLayout(mContext);
         layoutParams.addRule(RelativeLayout.BELOW, 1992001);
         layout.setLayoutParams(layoutParams);
         layout.setBackground(Shape.getShapeGray(mContext));
         layout.setId(1992002);
 
-        //帐号与密码的分割线
+        //帐号与验证码的分割线
         LayoutParams wireLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d1);
         View wire = new View(mContext);
-        wireLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        wireLayoutParams.topMargin = DetailedList.d39;
         wire.setLayoutParams(wireLayoutParams);
         wire.setBackgroundColor(0xffe9e9e9);
+
+        //密码与验证码的分割线
+        LayoutParams wireLayoutParams2 = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d1);
+        View wire2 = new View(mContext);
+        wireLayoutParams2.topMargin = DetailedList.d79;
+        wire2.setLayoutParams(wireLayoutParams2);
+        wire2.setBackgroundColor(0xffe9e9e9);
 
         //手机号码输入框
         LayoutParams phoneLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d40);
@@ -111,6 +116,15 @@ public class LoginLayout extends RelativeLayout {
         phone.setHint(DetailedList.phoneHint);
         phone.setInputType(InputType.TYPE_CLASS_PHONE);
         phone.setLayoutParams(phoneLayoutParams);
+
+        //验证码输入框
+        LayoutParams phoneCodeParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d40);
+        phoneCodeParams.addRule(RelativeLayout.CENTER_VERTICAL);
+        EditText code = new EditText(mContext);
+        code.setBackgroundColor(0);
+        code.setHint(DetailedList.phoneCodeHint);
+        code.setInputType(InputType.TYPE_CLASS_PHONE);
+        code.setLayoutParams(phoneCodeParams);
 
         //密码输入框
         LayoutParams pwdLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d40);
@@ -123,21 +137,23 @@ public class LoginLayout extends RelativeLayout {
 
         //添加到视图
         layout.addView(wire);
-        layout.addView(phone);
+        layout.addView(wire2);
         layout.addView(pwd);
+        layout.addView(code);
+        layout.addView(phone);
         addView(layout);
     }
 
     /**
-     * 登录
+     * 确定
      */
     private void initLogin() {
-        //登录
+        //确定
         LayoutParams loginLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DetailedList.d40);
         loginLayoutParams.addRule(RelativeLayout.BELOW, 1992002);
         loginLayoutParams.topMargin = DetailedList.d16;
         TextView login = new TextView(mContext);
-        login.setText(DetailedList.login);
+        login.setText(DetailedList.ok);
         login.setTextSize(17);
         login.setTextColor(-1);
         login.setGravity(Gravity.CENTER);
@@ -148,36 +164,6 @@ public class LoginLayout extends RelativeLayout {
         addView(login);
     }
 
-    private void setPassword() {
-        LayoutParams resetPwdLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DetailedList.d48);
-        resetPwdLayoutParams.addRule(RelativeLayout.BELOW, 1992003);
-        resetPwdLayoutParams.topMargin = DetailedList.d4;
-        TextView resetPwd = new TextView(mContext);
-        resetPwd.setText(DetailedList.resetPwd);
-        resetPwd.setTextSize(14);
-        resetPwd.setTextColor(0xff696969);
-        resetPwd.setGravity(Gravity.CENTER_VERTICAL);
-        resetPwd.setId(1992004);
-        resetPwd.setLayoutParams(resetPwdLayoutParams);
-        resetPwd.setOnClickListener(onClickListener);
-        addView(resetPwd);
-    }
-
-    private void registeredAccount() {
-        LayoutParams registeredAccountLayoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DetailedList.d48);
-        registeredAccountLayoutParams.addRule(RelativeLayout.BELOW, 1992003);
-        registeredAccountLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-        registeredAccountLayoutParams.topMargin = DetailedList.d4;
-        TextView registeredAccount = new TextView(mContext);
-        registeredAccount.setText(DetailedList.registeredAccount);
-        registeredAccount.setTextSize(14);
-        registeredAccount.setTextColor(0xff448bf9);
-        registeredAccount.setGravity(Gravity.CENTER_VERTICAL);
-        registeredAccount.setId(1992005);
-        registeredAccount.setLayoutParams(registeredAccountLayoutParams);
-        registeredAccount.setOnClickListener(onClickListener);
-        addView(registeredAccount);
-    }
 
     /**
      * 点击事件
@@ -187,15 +173,7 @@ public class LoginLayout extends RelativeLayout {
         public void onClick(View view) {
             switch (view.getId()) {
                 case 1992003:
-                    Toast.makeText(mContext, "点击登录", Toast.LENGTH_SHORT).show();
-                    return;
-                case 1992004:
-                    Toast.makeText(mContext, "点击重置密码", Toast.LENGTH_SHORT).show();
-                    listener.setPwd();
-                    return;
-                case 1992005:
-                    Toast.makeText(mContext, "点击快速注册", Toast.LENGTH_SHORT).show();
-                    listener.setPhone();
+                    Toast.makeText(mContext, "确定", Toast.LENGTH_SHORT).show();
                     return;
             }
         }

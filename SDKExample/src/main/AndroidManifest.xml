@@ -9,10 +9,14 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name="com.open.sdk.ui.SdkActivity"
-                  android:theme="@style/SdkTheme">
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:theme="@style/SdkTheme"
+        >
 
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
