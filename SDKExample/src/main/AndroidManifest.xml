@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.open.sdk.example">
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <application
+            android:name=".MyApplication"
             android:allowBackup="true"
             android:icon="@mipmap/logo"
             android:label="@string/app_name"
             android:supportsRtl="true"
-            android:theme="@style/AppTheme">
+    >
         <activity android:name="com.open.sdk.ui.SdkActivity"
                   android:configChanges="keyboardHidden|orientation|screenSize"
                   android:theme="@style/SdkTheme"

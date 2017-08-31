@@ -1,8 +1,6 @@
 package com.open.sdk.view;
 
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -19,7 +17,6 @@ import com.open.sdk.utlis.Shape;
 /**
  * Created by Administrator on 2017/8/29.
  */
-@RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 public class RegisteredAccountLayout extends RelativeLayout {
     //ViewGroup.LayoutParams.MATCH_PARENT = -1
     private Context mContext;

@@ -1,19 +1,24 @@
 package com.open.sdk.example;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import com.open.sdk.ui.SdkActivity;
+import com.open.sdk.view.FloatView;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_main);
         Intent i = new Intent(MainActivity.this, SdkActivity.class);
-        startActivity(i);
+//        startActivity(i);
         findViewById(R.id.login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,5 +42,21 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        showView();
+    }
+
+
+    private FloatView mLayout;
+
+    private void showView() {
+        mLayout = new FloatView(getApplicationContext());
+        mLayout.init(R.mipmap.logo);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //在程序退出(Activity销毁）时销毁悬浮窗口
+        mLayout.isShowView(false);
     }
 }

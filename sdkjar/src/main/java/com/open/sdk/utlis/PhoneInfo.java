@@ -6,6 +6,8 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -29,6 +31,18 @@ public class PhoneInfo {
      * 设备imei码
      */
     public static String imei;
+    /**
+     * 屏幕宽度
+     */
+    public static int width;
+    /**
+     * 屏幕高度
+     */
+    public static int height;
+    /**
+     * 状态栏高度
+     */
+    public static int statusBarHeight;
 
     private PhoneInfo() {
     }
@@ -55,12 +69,15 @@ public class PhoneInfo {
         imei = getDeviceImei(context);
         ip = getDeviceIP(context);
         mac = getDeviceMac(context);
+        width = getDeviceWidth(context);
+        height = getDeviceHeight(context);
+        statusBarHeight = getStatusBarHeight(context);
     }
 
     /**
      * 获取本机IMEI码
      *
-     * @param context
+     * @param context 上下文
      * @return
      */
     private static String getDeviceImei(Context context) {
@@ -87,7 +104,7 @@ public class PhoneInfo {
     /**
      * 获取本机IP
      *
-     * @param context
+     * @param context 上下文
      * @return
      */
     @SuppressLint("DefaultLocale")
@@ -120,7 +137,7 @@ public class PhoneInfo {
     /**
      * 获取本机MAC码
      *
-     * @param context
+     * @param context 上下文
      * @return
      */
     private static String getDeviceMac(Context context) {
@@ -135,5 +152,44 @@ public class PhoneInfo {
         return "";
     }
 
+    /**
+     * 获取屏幕宽度
+     *
+     * @param context 上下文
+     * @return
+     */
+    private static int getDeviceWidth(Context context) {
+        WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        return dm.widthPixels;
+    }
 
+    /**
+     * 获取屏幕宽度 高度
+     *
+     * @param context 上下文
+     * @return
+     */
+    private static int getDeviceHeight(Context context) {
+        WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        return dm.heightPixels;
+    }
+
+    /**
+     * 状态栏高度
+     *
+     * @param context 上下文
+     * @return
+     */
+    private static int getStatusBarHeight(Context context) {
+        int result = 0;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 }

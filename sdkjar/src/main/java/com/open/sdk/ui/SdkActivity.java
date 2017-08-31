@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import com.open.sdk.callback.SdkListener;
 import com.open.sdk.config.DetailedList;
+import com.open.sdk.utlis.PhoneInfo;
 import com.open.sdk.view.LoginLayout;
 import com.open.sdk.view.RegisteredAccountLayout;
 import com.open.sdk.view.SetPasswordLayout;
@@ -27,6 +28,7 @@ public class SdkActivity extends Activity implements SdkListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DetailedList.initData(this);
+        PhoneInfo.init(getApplicationContext());
         setContentView(layout());
     }
 
