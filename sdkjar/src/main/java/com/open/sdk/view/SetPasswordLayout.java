@@ -1,7 +1,6 @@
 package com.open.sdk.view;
 
 import android.content.Context;
-import android.os.Build;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -51,7 +50,7 @@ public class SetPasswordLayout extends RelativeLayout {
         rl.addRule(RelativeLayout.CENTER_VERTICAL);
         setLayoutParams(rl);
         setPadding(DetailedList.d10, 0, DetailedList.d10, DetailedList.d12);
-        setBackground(Shape.getShapeWhite(mContext));
+        setBackground(Shape.getShapeWhite());
     }
 
     /**
@@ -90,7 +89,7 @@ public class SetPasswordLayout extends RelativeLayout {
         RelativeLayout layout = new RelativeLayout(mContext);
         layoutParams.addRule(RelativeLayout.BELOW, 1992001);
         layout.setLayoutParams(layoutParams);
-        layout.setBackground(Shape.getShapeGray(mContext));
+        layout.setBackground(Shape.getShapeGray());
         layout.setId(1992002);
 
         //帐号与验证码的分割线
@@ -155,7 +154,7 @@ public class SetPasswordLayout extends RelativeLayout {
         login.setTextSize(17);
         login.setTextColor(-1);
         login.setGravity(Gravity.CENTER);
-        login.setBackground(Shape.getShapeBlue(mContext));
+        login.setBackground(Shape.getShapeAllBlue());
         login.setLayoutParams(loginLayoutParams);
         login.setId(1992003);
         login.setOnClickListener(onClickListener);

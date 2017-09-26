@@ -19,4 +19,20 @@
             android:text="登录"
             android:textColor="#ffffff"
             android:textSize="40sp"/>
+    <com.open.sdk.view.UniqueEditText
+            android:id="@+id/uniqueEditText"
+            android:layout_width="match_parent"
+            android:layout_marginTop="120dp"
+            android:layout_height="wrap_content">
+
+    </com.open.sdk.view.UniqueEditText>
+
+    <com.open.sdk.view.UniqueEditText
+            android:id="@+id/pwdEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/uniqueEditText">
+
+    </com.open.sdk.view.UniqueEditText>
 </RelativeLayout>

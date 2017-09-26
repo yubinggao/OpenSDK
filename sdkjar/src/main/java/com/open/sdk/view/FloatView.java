@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import com.open.sdk.config.DetailedList;
 
 /**
  * Created by Administrator on 2017/8/31.
@@ -63,17 +64,18 @@ public class FloatView extends View {
         wmParams.x = (int) (x - mTouchStartX);
         if (wmParams.y < 0) {
             wmParams.y = 0;
-        } else if (wmParams.y > 1710) {
-            wmParams.y = 1710;
+        } else if (wmParams.y > DetailedList.floatHeightScope - getHeight() / 2 * 3) {
+            wmParams.y = DetailedList.floatHeightScope - getHeight() / 2 * 3;
         }
-        if (wmParams.x < 470) {
+        if (wmParams.x < ((DetailedList.floatWidthScope - getWidth()) / 2)) {
             wmParams.x = 0;
-        } else if (wmParams.x > 470) {
-            wmParams.x = 940;
+        } else if (wmParams.x > ((DetailedList.floatWidthScope - getWidth()) / 2)) {
+            wmParams.x = DetailedList.floatWidthScope - getWidth();
         }
 
 
         Log.i("end", "startX" + wmParams.x + " ==== startY" + wmParams.y);
+        Log.i("wh", " getWidth" + getWidth());
         wm.updateViewLayout(this, wmParams);
     }
 

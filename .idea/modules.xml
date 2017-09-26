@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/OpenSDK.iml" filepath="$PROJECT_DIR$/OpenSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/SDKExample/SDKExample.iml" filepath="$PROJECT_DIR$/SDKExample/SDKExample.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TestHFSdk/TestHFSdk.iml" filepath="$PROJECT_DIR$/TestHFSdk/TestHFSdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/anttest/anttest.iml" filepath="$PROJECT_DIR$/anttest/anttest.iml" />
       <module fileurl="file://$PROJECT_DIR$/sdkjar/sdkjar.iml" filepath="$PROJECT_DIR$/sdkjar/sdkjar.iml" />
     </modules>

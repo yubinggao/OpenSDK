@@ -159,10 +159,10 @@ public class PhoneInfo {
      * @return
      */
     private static int getDeviceWidth(Context context) {
-        WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics dm = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(dm);
-        return dm.widthPixels;
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//        DisplayMetrics dm = new DisplayMetrics();
+//        wm.getDefaultDisplay().getMetrics(dm);
+        return  wm.getDefaultDisplay().getWidth();
     }
 
     /**
@@ -172,10 +172,10 @@ public class PhoneInfo {
      * @return
      */
     private static int getDeviceHeight(Context context) {
-        WindowManager wm = (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
-        DisplayMetrics dm = new DisplayMetrics();
-        wm.getDefaultDisplay().getMetrics(dm);
-        return dm.heightPixels;
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+//        DisplayMetrics dm = new DisplayMetrics();
+//        wm.getDefaultDisplay().getMetrics(dm);
+        return wm.getDefaultDisplay().getHeight();
     }
 
     /**

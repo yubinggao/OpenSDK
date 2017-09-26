@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import com.open.sdk.config.DetailedList;
 import com.open.sdk.ui.SdkActivity;
 import com.open.sdk.view.FloatView;
+import com.open.sdk.view.UniqueEditText;
 
 
 public class MainActivity extends Activity {
@@ -15,7 +17,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+        DetailedList.initData(getApplicationContext());
         setContentView(R.layout.activity_main);
         Intent i = new Intent(MainActivity.this, SdkActivity.class);
 //        startActivity(i);
@@ -43,6 +45,13 @@ public class MainActivity extends Activity {
             }
         });
         showView();
+        UniqueEditText uniqueEditText = (UniqueEditText)  findViewById(R.id.uniqueEditText);
+        uniqueEditText.setHintTxt("请输入帐号");
+        uniqueEditText.show();
+
+        UniqueEditText pwdEditText = (UniqueEditText)  findViewById(R.id.pwdEditText);
+        pwdEditText.setHintTxt("请输入密码");
+        pwdEditText.show();
     }
 
 

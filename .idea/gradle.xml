@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/SDKExample" />
+            <option value="$PROJECT_DIR$/TestHFSdk" />
             <option value="$PROJECT_DIR$/anttest" />
             <option value="$PROJECT_DIR$/sdkjar" />
           </set>

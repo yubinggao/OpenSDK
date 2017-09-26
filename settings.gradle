@@ -1,1 +1,1 @@
-include ':anttest', ':SDKExample', ':sdkjar'
+include ':anttest', ':SDKExample', ':sdkjar', ':TestHFSdk'

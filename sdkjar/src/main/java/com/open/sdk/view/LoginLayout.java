@@ -1,7 +1,6 @@
 package com.open.sdk.view;
 
 import android.content.Context;
-import android.os.Build;
 
 import android.text.InputType;
 import android.util.AttributeSet;
@@ -19,7 +18,7 @@ import com.open.sdk.utlis.Shape;
 /**
  * Created by Administrator on 2017/8/29.
  */
- 
+
 public class LoginLayout extends RelativeLayout {
     //ViewGroup.LayoutParams.MATCH_PARENT = -1
     private Context mContext;
@@ -53,7 +52,7 @@ public class LoginLayout extends RelativeLayout {
         rl.addRule(RelativeLayout.CENTER_HORIZONTAL);
         setLayoutParams(rl);
         setPadding(DetailedList.d10, 0, DetailedList.d10, DetailedList.d12);
-        setBackground(Shape.getShapeWhite(mContext));
+        setBackground(Shape.getShapeWhite());
     }
 
     /**
@@ -94,7 +93,7 @@ public class LoginLayout extends RelativeLayout {
         RelativeLayout layout = new RelativeLayout(mContext);
         layoutParams.addRule(RelativeLayout.BELOW, 1992001);
         layout.setLayoutParams(layoutParams);
-        layout.setBackground(Shape.getShapeGray(mContext));
+        layout.setBackground(Shape.getShapeGray());
         layout.setId(1992002);
 
         //帐号与密码的分割线
@@ -141,7 +140,7 @@ public class LoginLayout extends RelativeLayout {
         login.setTextSize(17);
         login.setTextColor(-1);
         login.setGravity(Gravity.CENTER);
-        login.setBackground(Shape.getShapeBlue(mContext));
+        login.setBackground(Shape.getShapeAllBlue());
         login.setLayoutParams(loginLayoutParams);
         login.setId(1992003);
         login.setOnClickListener(onClickListener);
