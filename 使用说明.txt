@@ -1,0 +1,25 @@
+第一步反编译:
+
+apktool.bat d -f test.apk -o test
+
+test.apk	-->待反编译的APK
+test    	-->存放反编译资源文件名
+
+
+
+第二步将反编译的文件打包:
+
+apktool.bat b test
+
+test    	-->存放反编译资源文件名
+dist		-->会有个apk包,改成zip文件
+
+
+
+第三步签名:
+
+java -jar signapk.jar testkey.x509.pem testkey.pk8 test.zip update_signed.zip
+
+test.zip	-->待签名压缩包
+test    	-->签名后压缩包改成apk后缀即可安装
+

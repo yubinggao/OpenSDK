@@ -25,4 +25,28 @@
         <item name="android:backgroundDimEnabled">false</item>
         <!-- activity不变暗 -->
     </style>
+
+
+
+
+
+
+
+
+    <style name="SdkTheme" >
+
+        <!--边框-->
+        <item name="android:windowFrame">@color/transparent</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--半透明-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--无标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--背景透明-->
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+        <item name="android:finishOnTaskLaunch">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
 </resources>

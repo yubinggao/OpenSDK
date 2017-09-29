@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="sdkjar1522">
+    <output-path>E:/sdkjar1522</output-path>
+    <root id="archive" name="sdkjar1522.jar">
+      <element id="module-output" name="sdkjar" />
+    </root>
+  </artifact>
+</component>

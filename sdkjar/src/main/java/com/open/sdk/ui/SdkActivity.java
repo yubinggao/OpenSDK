@@ -27,8 +27,7 @@ public class SdkActivity extends Activity implements SdkListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        DetailedList.initData(getApplicationContext());
         setContentView(layout());
     }
 

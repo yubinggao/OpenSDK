@@ -25,11 +25,16 @@
     <application
 		android:name="com.hanfeng.guildsdk.HfsdkApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <activity android:name="com.open.sdk.ui.SdkActivity"
+                  android:configChanges="keyboardHidden|orientation|screenSize"
+                  android:theme="@style/SdkTheme"
+        />
         <activity
-            android:name="com.example.newhfsdkdemo.MainActivity"
+            android:name="com.example.newhfsdkdemo.TestSDKActivity"
             android:label="@string/app_name" 
              android:screenOrientation="portrait"
             android:configChanges="orientation|keyboardHidden|screenSize">
